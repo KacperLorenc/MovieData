@@ -1,5 +1,5 @@
 
-package pl.kacperlorenc.demo.models;
+package pl.kacperlorenc.models;
 
 import com.fasterxml.jackson.annotation.*;
 
