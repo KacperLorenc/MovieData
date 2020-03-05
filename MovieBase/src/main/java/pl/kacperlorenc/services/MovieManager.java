@@ -6,6 +6,7 @@ import pl.kacperlorenc.dao.MovieRepository;
 import pl.kacperlorenc.dao.entities.Movie;
 import pl.kacperlorenc.models.MovieResponse;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,7 +20,7 @@ public class MovieManager {
         this.responseService = responseService;
     }
 
-    public Movie findByTitle(String title) {
+    public Movie downloadByTitle(String title) {
         Optional<MovieResponse> response = Optional.ofNullable(responseService.getResponse(title));
 
         if (response.isPresent()) {
@@ -30,8 +31,21 @@ public class MovieManager {
         return null;
     }
 
-    public void saveMovieByTitle(String title) {
-        Optional<Movie> movieToSave = Optional.ofNullable(findByTitle(title));
-        movieToSave.ifPresent(movie -> repository.save(movie));
+    public void saveByTitle(String title) {
+        Optional<Movie> movieToSave = Optional.ofNullable(downloadByTitle(title));
+        movieToSave.ifPresent(movie -> {
+            repository.save(movie);
+            System.out.println("Movie " + movie.getTitle() + " saved successfully.");
+        });
     }
+
+    public Optional<Movie> findByTitle(String title){
+        return repository.findByTitle(title);
+    }
+    public List<Movie> findAll(){
+        return repository.findAll();
+    }
+
+
+
 }

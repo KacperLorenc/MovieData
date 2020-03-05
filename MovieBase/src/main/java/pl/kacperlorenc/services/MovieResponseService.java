@@ -11,7 +11,7 @@ public class MovieResponseService {
     private void initResponse(String movieTitle) {
 
         this.response = new RestTemplate().getForObject(
-                "http://www.omdbapi.com/?t=" + movieTitle.replaceAll(" ","+").replaceAll("\\s",""), MovieResponse.class
+                "http://www.omdbapi.com/?t=" + movieTitle.replaceAll(" ","+").replaceAll("\\s","")+"&apikey=9886ad6a", MovieResponse.class
         );
     }
     public MovieResponse getResponse(String movieTitle){
