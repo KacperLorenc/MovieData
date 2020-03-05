@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Movie {
@@ -119,5 +120,26 @@ public class Movie {
                 ", writer='" + writer + '\'' +
                 ", actors='" + actors + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return id.equals(movie.id) &&
+                title.equals(movie.title) &&
+                year.equals(movie.year) &&
+                runtime.equals(movie.runtime) &&
+                genre.equals(movie.genre) &&
+                director.equals(movie.director) &&
+                writer.equals(movie.writer) &&
+                plot.equals(movie.plot) &&
+                actors.equals(movie.actors);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, year, runtime, genre, director, writer, plot, actors);
     }
 }

@@ -25,7 +25,7 @@ public class MovieManager {
 
         if (response.isPresent()) {
             MovieResponse movieResponse = response.get();
-            return new Movie(movieResponse.getTitle(), movieResponse.getYear(), movieResponse.getRuntime(), movieResponse.getGenre(),
+            return new Movie(movieResponse.getTitle().toLowerCase(), movieResponse.getYear(), movieResponse.getRuntime(), movieResponse.getGenre(),
                     movieResponse.getDirector(), movieResponse.getWriter(), movieResponse.getPlot(), movieResponse.getActors());
         }
         return null;
@@ -34,18 +34,21 @@ public class MovieManager {
     public void saveByTitle(String title) {
         Optional<Movie> movieToSave = Optional.ofNullable(downloadByTitle(title));
         movieToSave.ifPresent(movie -> {
-            repository.save(movie);
-            System.out.println("Movie " + movie.getTitle() + " saved successfully.");
+            if(!findByTitle(title).isPresent()) {
+                repository.save(movie);
+            }
         });
     }
 
     public Optional<Movie> findByTitle(String title){
-        return repository.findByTitle(title);
+        return repository.findByTitle(title.toLowerCase());
     }
     public List<Movie> findAll(){
         return repository.findAll();
     }
-
+    public void deleteMovieByTitle(String title){
+        repository.deleteByTitle(title.toLowerCase());
+    }
 
 
 }
